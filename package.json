@@ -4,7 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postinstall": "npx patch-package"  //used to create a customized patch for correcting the filename of imgs downloaded using react-modal-image
+    "postinstall": "npx patch-package"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
