@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { storage } from "../../firebase/firebase";
 import { FullMetadata, getDownloadURL, getMetadata, listAll, ref } from "firebase/storage";
+import ModalImage from "react-modal-image";
 
 export default function Page() {
   const [imageList, setImageList] = useState<{metadata: FullMetadata, url: string}[]>([]);
@@ -16,14 +17,16 @@ export default function Page() {
       const imageRefs = await listAll(storageRef); // List all files in the storage
 
       // Get the metadata and URL of each image
-      const images = await Promise.all(
+      let images = await Promise.all(
         imageRefs.items.map(async (ref) => {
           const metadata = await getMetadata(ref);
           const url = await getDownloadURL(ref);
           return { metadata, url };
         })
       );
-      
+
+      images = images.sort((a, b) => new Date(b.metadata.timeCreated).getTime() - new Date(a.metadata.timeCreated).getTime());
+
       setImageList(images);
     };
     fetchImages();
@@ -45,24 +48,33 @@ export default function Page() {
         </h2>
         <div className="flex flex-col items-center justify-between w-full mt-6 sm:mt-10">
           <div className="flex flex-col mt-4 mb-16 space-y-10">
-            <div className="flex flex-col sm:space-x-8 sm:flex-row">    
-              <div>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">    
                 {imageList.map((image, index) => (
                   <div key={index} className="mt-8 sm:mt-0">
-                    <h3 className="mb-1 text-lg font-medium">{image.metadata.customMetadata?.prompt}</h3>
-                    <Image
+                    <ModalImage className="object-cover w-full mt-2 h-96 rounded-2xl sm:mt-0"
+                        small={image.url}
+                        large={image.url}
+                        alt={image.metadata.customMetadata?.prompt}
+                        hideZoom={true}
+                      />
+                    {/* <Image
                       alt={`Image ${index + 1}`}
                       width={512}
                       height={512}
                       src={image.url}
+                      onClick={() => {
+                        console.log(image.metadata.customMetadata?.prompt);
+
+                      }}
                       className="object-cover w-full mt-2 h-96 rounded-2xl sm:mt-0"
-                    />
+                    /> */}
+                    <h3 className="mb-1 font-medium text-md">{image.metadata.customMetadata?.prompt}</h3>
                   </div>
                 ))}
               </div>         
             </div>
           </div>
-        </div>
+
       </main>
       <Footer />
     </div>
