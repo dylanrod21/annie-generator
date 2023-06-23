@@ -2,22 +2,14 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 
-let apiKey = process.env.FIREBASE_API_KEY;
-let authDomain = process.env.FIREBASE_AUTH_DOMAIN;
-let projectId = process.env.FIREBASE_PROJECT_ID;
-let storageBucket = process.env.FIREBASE_STORAGE_BUCKET;
-let messagingSenderId = process.env.FIREBASE_MESSAGING_SENDER_ID;
-let appId = process.env.FIREBASE_APP_ID;
-let measurementId = process.env.FIREBASE_MEASURMENT_ID;
-
 const firebaseConfig = {
-  apiKey: apiKey,
-  authDomain: authDomain,
-  projectId: projectId,
-  storageBucket: storageBucket,
-  messagingSenderId: messagingSenderId,
-  appId: appId,
-  measurementId: measurementId
+  apiKey: "AIzaSyAugZ4anf8-wanYJZ-wAQo60TbPyT9q1pM",
+  authDomain: "annie-generator.firebaseapp.com",
+  projectId: "annie-generator",
+  storageBucket: "annie-generator.appspot.com",
+  messagingSenderId: "942709458175",
+  appId: "1:942709458175:web:b47c7962494db19c9278ca",
+  measurementId: "G-PKMX17HVS2"
 };
 
 const app = initializeApp(firebaseConfig);
