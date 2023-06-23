@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import LoadingDots from "../../components/LoadingDots";
 import ResizablePanel from "../../components/ResizablePanel";
+import PromptSelector from '../../components/PromptSelector';
 import downloadPhoto from "../../utils/downloadPhoto";
 import convertToBlob from "../../utils/convertToBlob";
 import { storage } from "../../firebase/firebase";
@@ -15,7 +16,7 @@ import { v4 } from "uuid";
 import Link from "next/link";
 
 
-export default function DreamPage() {
+export default function Page() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [generatedImageLoaded, setGeneratedImageLoaded] = useState<boolean>(false);
@@ -71,6 +72,7 @@ export default function DreamPage() {
             <motion.div className="flex flex-col items-center justify-between w-full mt-4">
               {!generatedImage && (
                 <>
+                  <PromptSelector onPromptSelect={setPrompt} />
                   <div className="w-full max-w-sm space-y-4">
                     <div className="flex items-center mt-3 space-x-3">
                       <Image

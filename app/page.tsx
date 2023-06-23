@@ -27,9 +27,9 @@ export default function HomePage() {
         </Link>
         <Link
           className="px-4 py-3 mt-8 font-medium text-white transition bg-blue-600 rounded-xl sm:mt-10 hover:bg-blue-500"
-          href="/prompt-list"
+          href="/gallery"
         >
-          View Annie Prompts
+          View Generated Annies
         </Link>
         <div className="flex flex-col items-center justify-between w-full mt-6 sm:mt-10">
           <div className="flex flex-col mt-4 mb-16 space-y-10">

@@ -111,10 +111,9 @@ const promptsList = [
         "closeup portrait of Annie as a witch surrounded by magical elements, highly detailed, photorealism, digital painting, dark colors, grayscale, intricate details, art by yuumei, greg rutkowski, eddie hong, and charlie bowater, ultra realism, magical elements.",
     },
 ];
-
 const PromptSelector: React.FC<PromptSelectorProps> = ({ onPromptSelect }) => {
     const [visible, setVisible] = useState(false);
-    const [prompts, setPrompts] = useState(promptsList); // assuming `prompts` is an array of strings
+    const [prompts, setPrompts] = useState(promptsList);
 
     const selectPrompt = (prompt: { label: string; prompt: string; }) => {
         onPromptSelect(prompt.prompt);
@@ -122,20 +121,23 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({ onPromptSelect }) => {
     };
 
     return (
-        <div>
-        <button onClick={() => setVisible(!visible)}>
-            {visible ? 'Hide Prompts' : 'Show Prompts'}
-        </button>
-        {visible && (
-            <div>
-            {prompts.map((prompt, index) => (
-                <p key={index} onClick={() => selectPrompt(prompt)}>
-                {prompt.label}
-                {prompt.prompt}
-                </p>
-            ))}
-            </div>
-        )}
+        <div className="flex flex-col items-center justify-center">
+            <button className="px-4 py-2 mb-4 text-white bg-blue-500 rounded-lg focus:outline-none"
+                    onClick={() => setVisible(!visible)}>
+                {visible ? 'Hide Prompts' : 'Show Prompts'}
+            </button>
+            {visible && (
+                <div className="grid grid-cols-3 gap-4">
+                    {prompts.map((prompt, index) => (
+                        <div key={index} 
+                             className="p-4 transition-shadow duration-200 bg-white rounded-lg shadow cursor-pointer hover:shadow-lg"
+                             onClick={() => selectPrompt(prompt)}>
+                            <h2 className="mb-2 text-lg font-semibold text-black">{prompt.label}</h2>
+                            <p className="text-sm text-black">{prompt.prompt}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
