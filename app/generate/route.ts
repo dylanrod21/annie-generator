@@ -3,7 +3,7 @@ import redis from "../../utils/redis";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
-// Create a new ratelimiter, that allows 5 requests per 24 hours
+// Create a new ratelimiter, that allows 25 requests per 24 hours
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,

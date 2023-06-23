@@ -3,51 +3,26 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
-import { Uploader } from "uploader";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import LoadingDots from "../../components/LoadingDots";
 import ResizablePanel from "../../components/ResizablePanel";
-import Toggle from "../../components/Toggle";
-import appendNewToName from "../../utils/appendNewToName";
 import downloadPhoto from "../../utils/downloadPhoto";
+import convertToBlob from "../../utils/convertToBlob";
+import { storage } from "../../firebase/firebase";
+import { ref, uploadBytesResumable } from "firebase/storage";
+import { v4 } from "uuid";
+import Link from "next/link";
 
-// Configuration for the uploader
-const uploader = Uploader({
-  apiKey: !!process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    ? process.env.NEXT_PUBLIC_UPLOAD_API_KEY
-    : "free",
-});
-
-const options = {
-  maxFileCount: 1,
-  mimeTypes: ["image/jpeg", "image/png", "image/jpg"],
-  editor: { images: { crop: false } },
-  styles: {
-    colors: {
-      primary: "#2563EB", // Primary buttons & links
-      error: "#d23f4d", // Error messages
-      shade100: "#fff", // Standard text
-      shade200: "#fffe", // Secondary button text
-      shade300: "#fffd", // Secondary button text (hover)
-      shade400: "#fffc", // Welcome text
-      shade500: "#fff9", // Modal close button
-      shade600: "#fff7", // Border
-      shade700: "#fff2", // Progress indicator background
-      shade800: "#fff1", // File item background
-      shade900: "#ffff", // Various (draggable crop buttons, etc.)
-    },
-  },
-};
 
 export default function DreamPage() {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [generatedImageLoaded, setGeneratedImageLoaded] = useState<boolean>(false);
-  const [sideBySide, setSideBySide] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
   const [prompt, setPrompt] = useState<string>("painting in the style of andy warhol");
+  const imageFolder = "generated-annie-images"; 
 
   async function generatePhoto(userPrompt: string) {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -64,13 +39,26 @@ export default function DreamPage() {
     if (res.status !== 200) {
       setError(newPhoto);
     } else {
+      let fileName = userPrompt.slice(0, 15) + "_" + v4();
+      setPhotoName(fileName);
       setGeneratedImage(newPhoto[0]);
+      const imageRef = ref(storage, `${imageFolder}/${fileName}.jpg`);
+      const blob = await convertToBlob(newPhoto[0]);
+                
+      uploadBytesResumable(imageRef, blob!, {
+          contentType: 'image/jpeg',
+          customMetadata: {
+              'prompt' : userPrompt,
+          }
+      }) 
     }
     setTimeout(() => {
       setLoading(false);
     }, 1300);
   }
 
+
+  
   return (
     <div className="flex flex-col items-center justify-center max-w-6xl min-h-screen py-2 mx-auto">
       <Header />
@@ -115,16 +103,11 @@ export default function DreamPage() {
                   generatedImageLoaded ? "visible mt-6 -ml-8" : "invisible"
                 }`}
               >
-                <Toggle
-                  className={`${generatedImageLoaded ? "visible mb-6" : "invisible"}`}
-                  sideBySide={sideBySide}
-                  setSideBySide={(newVal) => setSideBySide(newVal)}
-                />
               </div>
               {generatedImage && (
                 <div className="flex flex-col sm:space-x-4 sm:flex-row">
                   <div className="mt-8 sm:mt-0">
-                    <h2 className="mb-1 text-lg font-medium">Generated Room</h2>
+                    <h2 className="mb-1 text-lg font-medium">Generated Annie</h2>
                     <a href={generatedImage} target="_blank" rel="noreferrer">
                       <Image
                         alt="restored photo"
@@ -157,7 +140,7 @@ export default function DreamPage() {
                 </div>
               )}
               <div className="flex justify-center space-x-2">
-                {!loading && (
+                {!loading && !generatedImage && (
                   <button
                     onClick={() => {
                       generatePhoto(prompt);
@@ -171,17 +154,28 @@ export default function DreamPage() {
                   </button>
                 )}
                 {generatedImageLoaded && (
-                  <button
+                  <>
+                   <button
                     onClick={() => {
                       downloadPhoto(
                         generatedImage!,
-                        appendNewToName(photoName!)
+                        photoName!
                       );
                     }}
                     className="px-4 py-2 mt-8 font-medium text-black transition bg-white border rounded-full hover:bg-gray-100"
                   >
                     Download Generated Annie
                   </button>
+                  <Link
+                    className="px-4 py-3 mt-8 font-medium text-white transition bg-blue-600 rounded-xl sm:mt-10 hover:bg-blue-500"
+                    href="/gallery"
+                  >
+                    View Gallery
+                  </Link>
+                  </>
+
+                  
+                  
                 )}
               </div>
             </motion.div>
