@@ -21,7 +21,7 @@ index 9681ffc..cda166a 100644
    }, /*#__PURE__*/React.createElement(DownloadIcon, null)), enableZoom && /*#__PURE__*/React.createElement("a", {
      onClick: toggleZoom
 diff --git a/node_modules/react-modal-image/lib/Header.js b/node_modules/react-modal-image/lib/Header.js
-index 0d0e6c0..438b9b3 100644
+index 0d0e6c0..eaf0255 100644
 --- a/node_modules/react-modal-image/lib/Header.js
 +++ b/node_modules/react-modal-image/lib/Header.js
 @@ -39,7 +39,7 @@ var crossOriginDownload = function crossOriginDownload(href) {
@@ -29,7 +29,7 @@ index 0d0e6c0..438b9b3 100644
        return res.blob().then(function (blob) {
          var tmpAnchor = document.createElement("a");
 -        tmpAnchor.setAttribute("download", href.split("/").pop());
-+        tmpAnchor.setAttribute("download", "test_annie_dw.jpg");
++        tmpAnchor.setAttribute("download", "custom_generated_annie.jpg");
          tmpAnchor.href = URL.createObjectURL(blob);
          tmpAnchor.click();
        });
@@ -38,7 +38,7 @@ index 0d0e6c0..438b9b3 100644
    }, enableDownload && /*#__PURE__*/_react["default"].createElement("a", {
      href: image,
 -    download: true,
-+    download: "test_annie_dw2.jpg",
++    download: "custom_generated_annie.jpg",
      onClick: crossOriginDownload(image)
    }, /*#__PURE__*/_react["default"].createElement(_icons.DownloadIcon, null)), enableZoom && /*#__PURE__*/_react["default"].createElement("a", {
      onClick: toggleZoom
