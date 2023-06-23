@@ -1,7 +1,18 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  reactStrictMode: true,
+const nextConfig = {
   images: {
-    domains: ["upcdn.io", "replicate.delivery"],
+    domains: ['firebasestorage.googleapis.com', 'storage.googleapis.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "replicate.com",
+      },
+      {
+        protocol: "https",
+        hostname: "replicate.delivery",
+      },
+    ],
   },
-};
+}
+
+module.exports = nextConfig
