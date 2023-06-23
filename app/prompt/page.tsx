@@ -72,7 +72,6 @@ export default function Page() {
             <motion.div className="flex flex-col items-center justify-between w-full mt-4">
               {!generatedImage && (
                 <>
-                  <PromptSelector onPromptSelect={setPrompt} />
                   <div className="w-full max-w-sm space-y-4">
                     <div className="flex items-center mt-3 space-x-3">
                       <Image
@@ -141,43 +140,44 @@ export default function Page() {
                   <span className="block sm:inline">{error}</span>
                 </div>
               )}
-              <div className="flex justify-center space-x-2">
+              <div className="">
                 {!loading && !generatedImage && (
-                  <button
-                    onClick={() => {
-                      generatePhoto(prompt);
-                      setGeneratedImage(null);
-                      setGeneratedImageLoaded(false);
-                      setError(null);
-                    }}
-                    className="px-4 py-2 mt-8 font-medium text-white transition bg-blue-500 rounded-full hover:bg-blue-500/80"
-                  >
-                    Generate Annie
-                  </button>
+                  <>
+                    <button
+                      onClick={() => {
+                        generatePhoto(prompt);
+                        setGeneratedImage(null);
+                        setGeneratedImageLoaded(false);
+                        setError(null);
+                      }}
+                      className="px-4 py-2 mt-8 font-medium text-white transition bg-blue-500 rounded-full hover:bg-blue-500/80"
+                    >
+                      Generate Annie
+                    </button>
+                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
+                    <PromptSelector onPromptSelect={setPrompt} />
+                  </>
                 )}
                 {generatedImageLoaded && (
                   <>
-                   <button
-                    onClick={() => {
-                      downloadPhoto(
-                        generatedImage!,
-                        photoName!
-                      );
-                    }}
-                    className="px-4 py-2 mt-8 font-medium text-black transition bg-white border rounded-full hover:bg-gray-100"
-                  >
-                    Download Generated Annie
-                  </button>
-                  <Link
-                    className="px-4 py-2 mt-8 font-medium text-black transition bg-white border rounded-full hover:bg-gray-100"
-                    href="/gallery"
-                  >
-                    View Annie Gallery
-                  </Link>
+                    <button
+                      onClick={() => {
+                        downloadPhoto(
+                          generatedImage!,
+                          photoName!
+                        );
+                      }}
+                      className="px-4 py-2 mt-8 font-medium text-black transition bg-white border rounded-full hover:bg-gray-100"
+                    >
+                      Download Generated Annie
+                    </button>
+                    <Link
+                      className="px-4 py-2 mt-8 font-medium text-black transition bg-white border rounded-full hover:bg-gray-100"
+                      href="/gallery"
+                    >
+                      View Annie Gallery
+                    </Link>
                   </>
-
-                  
-                  
                 )}
               </div>
             </motion.div>

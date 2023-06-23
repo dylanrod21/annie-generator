@@ -30,21 +30,21 @@ const promptsList = [
     prompt:
         "Closeup portrait of Annie as an elf with long blond hair, fantasy concept art, intricate details, detailed armor, majestic background, art by wlop, Greg Rutkowski, digital painting, smooth lighting, looking towards the viewer.",
     },
-    // {
-    // label: "soccer",
-    // prompt:
-    //     "closeup portrait of Annie as a soccer player Annie wearing a xred and white uniform, action shot, grassy field in the background, bright sunlight, motion blur, dramatic lighting, intense facial expression, art by ross tran, charlie bowater, ignacio fernandez rios, kai carpenter, leesha hannigan, thierry doizon.",
-    // },
-    // {
-    // label: "clown",
-    // prompt:
-    //     "Closeup portrait of Annie as a clown, highly detailed, surreal, expressionless face, bright colors, contrast lighting, abstract background, art by wlop, greg rutkowski, charlie bowater, magali villeneuve, alphonse mucha, cartoonish, comic book style.",
-    // },
-    // {
-    // label: "jedi",
-    // prompt:
-    //     "closeup portrait of Annie as a jedi with a lightsaber, highly detailed, science fiction, star wars concept art, intricate details, bright colors, golden hour, art by marko djurdjevic, greg rutkowski, wlop, fredperry, digital painting, rossdraws.",
-    // },
+    {
+    label: "colorful art",
+    prompt:
+        "a award winning half body portrait of atsdm with stunning eyes with rainbow colored ombre hairstyle head in motion and hair flying by thomas danthony, outlined by whirling illuminated neon lines, sunglasses, outrun, vaporware, shaded flat illustration, digital art, trending on artstation, highly detailed, fine detail, intricate"
+    },
+    {
+    label: "clown",
+    prompt:
+        "Closeup portrait of Annie as a clown, highly detailed, surreal, expressionless face, bright colors, contrast lighting, abstract background, art by wlop, greg rutkowski, charlie bowater, magali villeneuve, alphonse mucha, cartoonish, comic book style.",
+    },
+    {
+    label: "jedi",
+    prompt:
+        "closeup portrait of Annie as a jedi with a lightsaber, highly detailed, science fiction, star wars concept art, intricate details, bright colors, golden hour, art by marko djurdjevic, greg rutkowski, wlop, fredperry, digital painting, rossdraws.",
+    },
     // {
     // label: "wizard",
     // prompt:
@@ -124,15 +124,15 @@ const PromptSelector: React.FC<PromptSelectorProps> = ({ onPromptSelect }) => {
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <button className="px-4 py-2 mb-4 text-white bg-blue-500 rounded-lg focus:outline-none"
-                    onClick={() => setVisible(!visible)}>
+            <button className="px-4 py-2 mb-4 font-medium text-white transition bg-blue-500 rounded-full hover:bg-blue-500/80"
+                onClick={() => setVisible(!visible)}>
                 {visible ? 'Hide Prompts' : 'Show Prompts'}
             </button>
             {visible && (
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 gap-2">
                     {prompts.map((prompt, index) => (
                         <div key={index} 
-                             className="p-4 transition-shadow duration-200 bg-white rounded-lg shadow cursor-pointer hover:shadow-lg"
+                             className="p-2 transition-shadow duration-200 bg-white rounded-lg shadow cursor-pointer hover:shadow-lg"
                              onClick={() => selectPrompt(prompt)}>
                             <h2 className="mb-2 text-lg font-semibold text-black">{prompt.label}</h2>
                             <p className="text-sm text-black">{prompt.prompt}</p>
