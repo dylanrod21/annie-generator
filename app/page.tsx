@@ -17,13 +17,19 @@ export default function HomePage() {
           </span>{" "}
         </h1>
         <h2 className="max-w-xl mx-auto mt-12 text-lg leading-7 text-gray-500 sm:text-gray-400">
-          Enter a prompt or select one from the prompts below to generate a new AI image of Annie.
+          Enter a prompt or select one from prompts to generate a new AI image of Annie.
         </h2>
         <Link
           className="px-4 py-3 mt-8 font-medium text-white transition bg-blue-600 rounded-xl sm:mt-10 hover:bg-blue-500"
           href="/prompt"
         >
-          Generate Annie Now!
+          Generate Annie Now
+        </Link>
+        <Link
+          className="px-4 py-3 mt-8 font-medium text-white transition bg-blue-600 rounded-xl sm:mt-10 hover:bg-blue-500"
+          href="/prompt-list"
+        >
+          View Annie Prompts
         </Link>
         <div className="flex flex-col items-center justify-between w-full mt-6 sm:mt-10">
           <div className="flex flex-col mt-4 mb-16 space-y-10">

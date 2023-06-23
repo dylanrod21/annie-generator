@@ -1,5 +1,5 @@
 import { Ratelimit } from "@upstash/ratelimit";
-import redis from "../../utils/redis";
+import redis from "../../../utils/redis";
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   }
 
   const { userPrompt } = await request.json();
-  console.log("userPrompt", process.env.REPLICATE_API_KEY);
+  
   // POST request to Replicate to start the image generation process
   let startResponse = await fetch("https://api.replicate.com/v1/predictions", {
     method: "POST",
@@ -47,11 +47,11 @@ export async function POST(request: Request) {
       version:
         "d4a4c909f8a52f73db29faf8fc6f9b26a5aa52fd7fbc52fa4620976dd800bcec",
       input: {
-        prompt: "atsdm " + userPrompt
-          ? "atsdm " + userPrompt
+        prompt: userPrompt.replace("Annie", process.env.INSTANCE_PROMPT)
+          ? userPrompt.replace("Annie", process.env.INSTANCE_PROMPT)
           : "painting of atsdm in the style of andy warhol",
         negative_prompt:
-          "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
+          "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, cropped face, cover face, cover visage, mutated hands",
       },
     }),
   });
