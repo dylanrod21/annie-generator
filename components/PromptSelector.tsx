@@ -33,7 +33,7 @@ const promptsList = [
     {
     label: "colorful art",
     prompt:
-        "a award winning half body portrait of atsdm with stunning eyes with rainbow colored ombre hairstyle head in motion and hair flying by thomas danthony, outlined by whirling illuminated neon lines, sunglasses, outrun, vaporware, shaded flat illustration, digital art, trending on artstation, highly detailed, fine detail, intricate"
+        "a award winning half body portrait of Annie with stunning eyes with rainbow colored ombre hairstyle head in motion and hair flying by thomas danthony, outlined by whirling illuminated neon lines, sunglasses, outrun, vaporware, shaded flat illustration, digital art, trending on artstation, highly detailed, fine detail, intricate"
     },
     {
     label: "clown",
