@@ -9,7 +9,7 @@ export const runtime = 'edge'
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.fixedWindow(25, "1440 m"),
+      limiter: Ratelimit.fixedWindow(10, "1440 m"),
       analytics: true,
     })
   : undefined;

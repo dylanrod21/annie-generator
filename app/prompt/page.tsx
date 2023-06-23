@@ -22,7 +22,7 @@ export default function Page() {
   const [generatedImageLoaded, setGeneratedImageLoaded] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
-  const [prompt, setPrompt] = useState<string>("painting in the style of andy warhol");
+  const [prompt, setPrompt] = useState<string>("painting in the style of a Nintendo game");
   const imageFolder = "generated-annie-images"; 
 
   async function generatePhoto(userPrompt: string) {
