@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-modal-image/lib/Header.js b/node_modules/react-modal-image/lib/Header.js
-index 0d0e6c0..6007355 100644
+index 0d0e6c0..0a1ba0e 100644
 --- a/node_modules/react-modal-image/lib/Header.js
 +++ b/node_modules/react-modal-image/lib/Header.js
 @@ -40,6 +40,7 @@ var crossOriginDownload = function crossOriginDownload(href) {
@@ -10,3 +10,12 @@ index 0d0e6c0..6007355 100644
          tmpAnchor.href = URL.createObjectURL(blob);
          tmpAnchor.click();
        });
+@@ -66,7 +67,7 @@ var Header = function Header(_ref) {
+     className: "__react_modal_image__icon_menu"
+   }, enableDownload && /*#__PURE__*/_react["default"].createElement("a", {
+     href: image,
+-    download: true,
++    download: "custom-annie-image.jpg",
+     onClick: crossOriginDownload(image)
+   }, /*#__PURE__*/_react["default"].createElement(_icons.DownloadIcon, null)), enableZoom && /*#__PURE__*/_react["default"].createElement("a", {
+     onClick: toggleZoom
