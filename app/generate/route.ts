@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
     if (!result.success) {
       return new Response(
-        "Too many uploads in 1 day. Please try again in a 24 hours.",
+        "Too many requests in 1 day. Please try again in a 24 hours.",
         {
           status: 429,
           headers: {
@@ -34,9 +34,8 @@ export async function POST(request: Request) {
     }
   }
 
-  const { imageUrl, theme, room } = await request.json();
-
-  // POST request to Replicate to start the image restoration generation process
+  const { userPrompt } = await request.json();
+  // POST request to Replicate to start the image generation process
   let startResponse = await fetch("https://api.replicate.com/v1/predictions", {
     method: "POST",
     headers: {
@@ -45,16 +44,12 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify({
       version:
-        "854e8727697a057c525cdb45ab037f64ecca770a1769cc52287c2e56472a247b",
+        "d4a4c909f8a52f73db29faf8fc6f9b26a5aa52fd7fbc52fa4620976dd800bcec",
       input: {
-        image: imageUrl,
-        prompt:
-          room === "Gaming Room"
-            ? "a room for gaming with gaming computers, gaming consoles, and gaming chairs"
-            : `a ${theme.toLowerCase()} ${room.toLowerCase()}`,
-        a_prompt:
-          "best quality, extremely detailed, photo from Pinterest, interior, cinematic photo, ultra-detailed, ultra-realistic, award-winning",
-        n_prompt:
+        prompt: userPrompt
+          ? userPrompt
+          : "painting of atsdm in the style of andy warhol",
+        negative_prompt:
           "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
       },
     }),
@@ -88,6 +83,6 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json(
-    restoredImage ? restoredImage : "Failed to restore image"
+    restoredImage ? restoredImage : "Failed to generate image"
   );
 }

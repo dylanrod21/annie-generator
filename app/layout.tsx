@@ -2,10 +2,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 import "../styles/globals.css";
 
-let title = "Dream Room Generator";
-let description = "Generate your dream room in seconds.";
-let ogimage = "https://roomgpt-demo.vercel.app/og-image.png";
-let sitename = "roomGPT.io";
+let title = "Annie Generator - Generate Images of the most beautiful girl in the world!";
+let description = "An image generator trained on images of the most beautiful girl in the world.";
+let ogimage = "https://annie-generator.vercel.app/og-image.png";
+let sitename = "AnnieGenerator.io";
 
 export const metadata: Metadata = {
   title,
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     images: [ogimage],
     title,
     description,
-    url: "https://roomgpt-demo.vercel.app",
+    url: "https://annie-generator.vercel.app",
     siteName: sitename,
     locale: "en_US",
     type: "website",
