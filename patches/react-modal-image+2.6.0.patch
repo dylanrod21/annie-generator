@@ -1,12 +1,12 @@
 diff --git a/node_modules/react-modal-image/lib/Header.js b/node_modules/react-modal-image/lib/Header.js
-index 0d0e6c0..d1e2a26 100644
+index 0d0e6c0..6007355 100644
 --- a/node_modules/react-modal-image/lib/Header.js
 +++ b/node_modules/react-modal-image/lib/Header.js
 @@ -40,6 +40,7 @@ var crossOriginDownload = function crossOriginDownload(href) {
        return res.blob().then(function (blob) {
          var tmpAnchor = document.createElement("a");
          tmpAnchor.setAttribute("download", href.split("/").pop());
-+        tmpAnchor.download = href.split("/").pop();
++        tmpAnchor.download = "custom-annie-image.jpg";
          tmpAnchor.href = URL.createObjectURL(blob);
          tmpAnchor.click();
        });
