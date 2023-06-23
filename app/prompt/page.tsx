@@ -47,7 +47,7 @@ export default function DreamPage() {
   const [sideBySide, setSideBySide] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [photoName, setPhotoName] = useState<string | null>(null);
-  const [prompt, setPrompt] = useState<string>("painting of atsdm in the style of andy warhol");
+  const [prompt, setPrompt] = useState<string>("painting in the style of andy warhol");
 
   async function generatePhoto(userPrompt: string) {
     await new Promise((resolve) => setTimeout(resolve, 200));
@@ -61,10 +61,10 @@ export default function DreamPage() {
     });
 
     let newPhoto = await res.json();
-    if (res.status !== 201) {
+    if (res.status !== 200) {
       setError(newPhoto);
     } else {
-      setGeneratedImage(newPhoto[1]);
+      setGeneratedImage(newPhoto[0]);
     }
     setTimeout(() => {
       setLoading(false);
@@ -121,6 +121,23 @@ export default function DreamPage() {
                   setSideBySide={(newVal) => setSideBySide(newVal)}
                 />
               </div>
+              {generatedImage && (
+                <div className="flex flex-col sm:space-x-4 sm:flex-row">
+                  <div className="mt-8 sm:mt-0">
+                    <h2 className="mb-1 text-lg font-medium">Generated Room</h2>
+                    <a href={generatedImage} target="_blank" rel="noreferrer">
+                      <Image
+                        alt="restored photo"
+                        src={generatedImage}
+                        className="relative w-full mt-2 rounded-2xl sm:mt-0 cursor-zoom-in h-96"
+                        width={475}
+                        height={475}
+                        onLoadingComplete={() => setGeneratedImageLoaded(true)}
+                      />
+                    </a>
+                  </div>
+                </div>
+              )}   
               {loading && (
                 <button
                   disabled

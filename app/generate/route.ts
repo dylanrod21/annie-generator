@@ -7,7 +7,7 @@ import { headers } from "next/headers";
 const ratelimit = redis
   ? new Ratelimit({
       redis: redis,
-      limiter: Ratelimit.fixedWindow(5, "1440 m"),
+      limiter: Ratelimit.fixedWindow(25, "1440 m"),
       analytics: true,
     })
   : undefined;
@@ -35,6 +35,7 @@ export async function POST(request: Request) {
   }
 
   const { userPrompt } = await request.json();
+  console.log("userPrompt", process.env.REPLICATE_API_KEY);
   // POST request to Replicate to start the image generation process
   let startResponse = await fetch("https://api.replicate.com/v1/predictions", {
     method: "POST",
@@ -46,8 +47,8 @@ export async function POST(request: Request) {
       version:
         "d4a4c909f8a52f73db29faf8fc6f9b26a5aa52fd7fbc52fa4620976dd800bcec",
       input: {
-        prompt: userPrompt
-          ? userPrompt
+        prompt: "atsdm " + userPrompt
+          ? "atsdm " + userPrompt
           : "painting of atsdm in the style of andy warhol",
         negative_prompt:
           "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
@@ -60,8 +61,8 @@ export async function POST(request: Request) {
   let endpointUrl = jsonStartResponse.urls.get;
 
   // GET request to get the status of the image restoration process & return the result when it's ready
-  let restoredImage: string | null = null;
-  while (!restoredImage) {
+  let generatedImage: string | null = null;
+  while (!generatedImage) {
     // Loop in 1s intervals until the alt text is ready
     console.log("polling for result...");
     let finalResponse = await fetch(endpointUrl, {
@@ -74,7 +75,7 @@ export async function POST(request: Request) {
     let jsonFinalResponse = await finalResponse.json();
 
     if (jsonFinalResponse.status === "succeeded") {
-      restoredImage = jsonFinalResponse.output;
+      generatedImage = jsonFinalResponse.output;
     } else if (jsonFinalResponse.status === "failed") {
       break;
     } else {
@@ -83,6 +84,6 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json(
-    restoredImage ? restoredImage : "Failed to generate image"
+    generatedImage ? generatedImage : "Failed to generate image"
   );
 }
