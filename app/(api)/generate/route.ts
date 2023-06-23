@@ -47,9 +47,9 @@ export async function POST(request: Request) {
       version:
         "d4a4c909f8a52f73db29faf8fc6f9b26a5aa52fd7fbc52fa4620976dd800bcec",
       input: {
-        prompt: userPrompt.replace("Annie", process.env.INSTANCE_PROMPT)
-          ? userPrompt.replace("Annie", process.env.INSTANCE_PROMPT)
-          : "painting of atsdm in the style of andy warhol",
+        prompt: userPrompt.toLowerCase().replace("annie", process.env.INSTANCE_PROMPT) && userPrompt.toLowerCase().includes("annie")
+          ? userPrompt.toLowerCase().replace("annie", process.env.INSTANCE_PROMPT)
+          : process.env.INSTANCE_PROMPT + " " + userPrompt,
         negative_prompt:
           "longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, cropped face, cover face, cover visage, mutated hands",
       },

@@ -169,10 +169,10 @@ export default function Page() {
                     Download Generated Annie
                   </button>
                   <Link
-                    className="px-4 py-3 mt-8 font-medium text-white transition bg-blue-600 rounded-xl sm:mt-10 hover:bg-blue-500"
+                    className="px-4 py-2 mt-8 font-medium text-black transition bg-white border rounded-full hover:bg-gray-100"
                     href="/gallery"
                   >
-                    View Gallery
+                    View Annie Gallery
                   </Link>
                   </>
 

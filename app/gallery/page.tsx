@@ -5,21 +5,27 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { storage } from "../../firebase/firebase";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
+import { FullMetadata, getDownloadURL, getMetadata, listAll, ref } from "firebase/storage";
 
 export default function Page() {
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [imageList, setImageList] = useState<{metadata: FullMetadata, url: string}[]>([]);
 
   useEffect(() => {
     const fetchImages = async () => {
       const storageRef = ref(storage, "generated-annie-images/"); // Reference to the images folder
       const imageRefs = await listAll(storageRef); // List all files in the storage
 
-      // Get the URL of each image
-      const urls = await Promise.all(imageRefs.items.map(ref => getDownloadURL(ref)));
-      setImageUrls(urls);
+      // Get the metadata and URL of each image
+      const images = await Promise.all(
+        imageRefs.items.map(async (ref) => {
+          const metadata = await getMetadata(ref);
+          const url = await getDownloadURL(ref);
+          return { metadata, url };
+        })
+      );
+      
+      setImageList(images);
     };
-
     fetchImages();
   }, []);
 
@@ -41,14 +47,14 @@ export default function Page() {
           <div className="flex flex-col mt-4 mb-16 space-y-10">
             <div className="flex flex-col sm:space-x-8 sm:flex-row">    
               <div>
-                {imageUrls.map((url, index) => (
+                {imageList.map((image, index) => (
                   <div key={index} className="mt-8 sm:mt-0">
-                    <h3 className="mb-1 text-lg font-medium"></h3>
+                    <h3 className="mb-1 text-lg font-medium">{image.metadata.customMetadata?.prompt}</h3>
                     <Image
                       alt={`Image ${index + 1}`}
-                      width={400}
-                      height={400}
-                      src={url}
+                      width={512}
+                      height={512}
+                      src={image.url}
                       className="object-cover w-full mt-2 h-96 rounded-2xl sm:mt-0"
                     />
                   </div>
